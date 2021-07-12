@@ -1,0 +1,7 @@
+{
+  "name": "pwa-meteo-clima",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}

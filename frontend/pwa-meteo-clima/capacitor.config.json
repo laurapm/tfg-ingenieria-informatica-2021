@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "pwa-meteo-clima",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}
