@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-contact',
@@ -7,9 +8,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactPage implements OnInit {
 
-  constructor() { }
+  fields = [
+    {
+      fieldName: 'Name',
+      type: 'text',
+    },
+    {
+      fieldName: 'Surname',
+      type: 'text',
+    },
+    {
+      fieldName: 'Phone',
+      type: 'numeric',
+    },
+    {
+      fieldName: 'Email',
+      type: 'email',
+    }
+  ];
+
+  constructor(public toastController: ToastController) { }
+  async sendNotification() {
+    const toast = await this.toastController.create({
+      message: 'The email has been sent',
+      duration: 4000,
+      buttons: [
+        {
+          text: 'X',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    toast.present();
+  }
 
   ngOnInit() {
+
   }
 
 }
