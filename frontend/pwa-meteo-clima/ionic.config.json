@@ -1,7 +1,5 @@
 {
   "name": "pwa-meteo-clima",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue"
+  "integrations": {},
+  "type": "angular"
 }
