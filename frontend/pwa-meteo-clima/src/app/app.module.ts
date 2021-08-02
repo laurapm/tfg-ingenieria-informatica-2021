@@ -12,11 +12,14 @@ import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
+// Import GEOLOCATION and GEOCODER
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ],
   providers: [
     Platform,
     StatusBar,
@@ -24,7 +27,10 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
-    }
+    },
+     //AÑADIMOS GEOLOCATION Y GEOCODER
+     Geolocation,
+     NativeGeocoder,
   ],
   bootstrap: [AppComponent],
 })
