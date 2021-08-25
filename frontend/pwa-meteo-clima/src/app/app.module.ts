@@ -15,14 +15,11 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 // Import GEOLOCATION and GEOCODER
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
-import { HttpConfigInterceptor } from './interceptor';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
-
     Platform,
     StatusBar,
     SplashScreen,
