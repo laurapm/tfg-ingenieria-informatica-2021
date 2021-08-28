@@ -9,11 +9,11 @@ import {Station} from '../models/station';
 export class ApiDataService {
   url = 'http://localhost:8080/meteoclima';
 
-  constructor(public http: HttpClient){
+  constructor(public httpClient: HttpClient){
   }
 
   getListStations(): Observable<any>{
-    return this.http
+    return this.httpClient
     .get<Station>(this.url+'/stations');
   }
 }

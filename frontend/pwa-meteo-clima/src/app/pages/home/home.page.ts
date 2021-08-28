@@ -2,6 +2,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {ApiDataService} from '../../services/api-data.service';
 import { HttpClient } from '@angular/common/http';
+import { Station } from 'src/app/models/station';
+import { MapMarker } from 'src/app/models/map-marker';
 declare let google: any;
 
 @Component({
@@ -12,9 +14,11 @@ declare let google: any;
 export class HomePage {
 
   map: any;
-  markers = [ ];
+  markers= [];
+  listStations;
+  station: Station;
 
-  listStations: any;
+
 
   @ViewChild('map', {read: ElementRef, static: false}) mapRef: ElementRef;
 
@@ -22,24 +26,14 @@ export class HomePage {
         public apiDataService: ApiDataService,
         public http: HttpClient
   ) {
-   this.listStations = [];
+    this.listStations = this.getAllStations();
   }
-
-  ionViewDidEnter(){
+  ionViewWillEnter(){
     this.showmap();
-
-    this.markers =[
-    {
-      position: new google.maps.LatLng(40.513493, -3.349011,),
-      map: this.map,
-      title: 'Marker 1'
-    },
-    {
-      position: new google.maps.LatLng(32.06485, 34.763226),
-      map: this.map,
-      title: 'Marker 2'
-    }];
+    console.log('He llamado a esta funcion');
+    this.loadAllMarkers();
   };
+
 
   showmap(){
     const location = new google.maps. LatLng(40.5053455, -3.3481092);
@@ -50,42 +44,55 @@ export class HomePage {
     };
 
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-     //Default Marker
-    const marker = new google.maps.Marker({
-    position: location,
-    map: this.map,
-    title: 'Hello World!'
-  });
+    this.createMarkers();
 
     //Adding other markers
     this.loadAllMarkers();
   }
 
- getAllStations() {
-    //Get saved list of stations
-    this.apiDataService.getListStations().subscribe(response => {
-      this.listStations = response;
-    });
+ getAllStations(): Station[] {
+    //Get saved list of station
+    this.apiDataService.getListStations().subscribe(
+      (data: Station[]) => {
+        this.listStations = data;
+      }
+    );
+    return this.listStations;
   };
 
   loadAllMarkers(): void {
     this.markers.forEach(markerInfo => {
       //Creating a new marker object
       const marker = new google.maps.Marker({markerInfo });
-
-      //creating a new info window with markers info
-      const infoWindow = new google.maps.InfoWindow({
-        content: marker.getTitle()
-      });
-
-      //Add click event to open info window on marker
-      marker.addListener('click', () => {
-        infoWindow.open(marker.getMap(), marker);
-      });
-
       //Adding marker to google map
       marker.setMap(this.map);
     });
+  }
+
+  createMarkers(){
+    for (const station of this.listStations){
+      console.log('Creando marcador para la estacion', station);
+
+      const marker = new google.maps.Marker({
+        position: new google.maps. LatLng(station.latitude, station.longitude),
+        map: this.map,
+        title: station.name
+      });
+
+       // Create an info window to share between markers.
+  const infoWindow = new google.maps.InfoWindow();
+  //Add click event to open info window on marker
+   // Add a click listener for each marker, and set up the info window.
+marker.addListener('click', () => {
+  infoWindow.close();
+  infoWindow.setContent(marker.getTitle());
+  infoWindow.open(marker.getMap(), marker);
+});
+
+      this.markers.push(marker);
+
+      console.log('Resultado lista: ', this.markers);
+    }
   }
 
 }

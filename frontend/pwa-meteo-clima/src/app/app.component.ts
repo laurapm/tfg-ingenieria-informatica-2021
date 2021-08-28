@@ -4,12 +4,31 @@ import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
+
+
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  // Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+ /*firebaseConfig = {
+  apiKey: 'AIzaSyCU_vtPsSyy7djbSkKUjp48-3fFjCTF4cE',
+  authDomain: 'estacionesmeteo-tfg.firebaseapp.com',
+  projectId: 'estacionesmeteo-tfg',
+  storageBucket: 'estacionesmeteo-tfg.appspot.com',
+  messagingSenderId: '664913976782',
+  appId: '1:664913976782:web:cd1e7d56cc2a54f891df9f',
+  measurementId: 'G-K1SDK2G0H4'
+};
+
+// Initialize Firebase
+ app = initializeApp(this.firebaseConfig);
+ analytics = getAnalytics(this.app);*/
+
   activePageTitle = 'Dashboard';
 
   pages = [
