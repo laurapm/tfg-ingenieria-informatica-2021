@@ -94,6 +94,10 @@ export class HomePage {
             ';</p>' +
             '</div>';
 
+
+
+
+
           // Create an info window to share between markers.
           const infoWindow = new google.maps.InfoWindow();
           //Add click event to open info window on marker
