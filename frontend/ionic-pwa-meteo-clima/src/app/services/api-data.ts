@@ -21,4 +21,8 @@ export class ApiDataService {
   getStationInfo(id: number): Observable<any>{
     return this.httpClient.get<StationSensors>(this.url + '/sensors-station'+ '?stationId=' + id);
   }
+
+  getSensors(): Observable<any>{
+    return this.httpClient.get<string>(this.url+'/sensorTypes/name');
+  }
 }

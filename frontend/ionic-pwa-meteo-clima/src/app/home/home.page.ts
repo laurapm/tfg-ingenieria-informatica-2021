@@ -7,6 +7,7 @@ import { StationSensors } from 'src/app/model/station-sensors';
 import { Position, PositionOptions } from '@capacitor/geolocation';
 import { async, waitForAsync } from '@angular/core/testing';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { ModalController } from '@ionic/angular';
 declare let google: any;
 
 @Component({
@@ -17,14 +18,19 @@ declare let google: any;
 export class HomePage {
   map: any;
   markers = [];
+  position: any = null;
+
   listStations;
   station: Station;
+
   sensors: StationSensors;
-  position: any = null;
+  listSensorsName;
 
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
-  constructor(public apiDataService: ApiDataService, public http: HttpClient, public geolocation: Geolocation) {
+  constructor(public apiDataService: ApiDataService, public http: HttpClient,
+              public geolocation: Geolocation,
+              private modalController: ModalController) {
     this.listStations = this.getAllStations();
   }
 
@@ -33,7 +39,16 @@ export class HomePage {
     this.loadAllMarkers();
   }
 
+  getAllStations(): Promise<Station[]> {
+    //Get saved list of station
+    this.apiDataService.getListStations().subscribe((data: Station[]) => {
+      this.listStations = data;
+    });
+    return this.listStations;
+  }
+
   showmap() {
+
     // this.listStations = this.getAllStations();
     // console.log('lista estaciones: ', this.listStations);
     this.geolocation.getCurrentPosition().then((resp) => {
@@ -59,35 +74,9 @@ export class HomePage {
     this.loadAllMarkers();
   }
 
-  getAllStations(): Promise<Station[]> {
-    console.log('llamado getAllStations');
-    //Get saved list of station
-    this.apiDataService.getListStations().subscribe((data: Station[]) => {
-      this.listStations = data;
-    });
-    return this.listStations;
-  }
-
-  getInfoStation(id: number): StationSensors {
-    let stationInfo: StationSensors = null;
-    this.apiDataService.getStationInfo(id).subscribe((data: StationSensors) => {
-      stationInfo = data;
-    });
-    return stationInfo;
-  }
-
-  loadAllMarkers(): void {
-    this.markers.forEach((markerInfo) => {
-      //Creating a new marker object
-      const marker = new google.maps.Marker({ markerInfo });
-      //Adding marker to google map
-      marker.setMap(this.map);
-    });
-  }
-
   createMarkers() {
     for (const station of this.listStations) {
-      console.log('Creando marcador para la estacion', station);
+      // console.log('Creando marcador para la estacion', station);
 
       const marker = new google.maps.Marker({
         position: new google.maps.LatLng(station.latitude, station.longitude),
@@ -100,20 +89,23 @@ export class HomePage {
         .getStationInfo(station.id)
         .subscribe((data: StationSensors) => {
           stationInfo = data;
+
+          let color = '#FF5733';
+          if (stationInfo.listSensors.length >= 5){
+             color = '#5DADE2';
+          }
           const markerInfo =
             '<div class=divmap>' +
-            '<p style="color:#FF0000; font-weight: bold">' +
+            '<p style="color:' + color + '; font-weight: bold">' +
             stationInfo.nameStation +
             '</p>' +
-            '<p>Sensores de la estacion: ' +
-            stationInfo.listSensors.toString() +
+            '<p>Sensores de la estacion: <br>' +
+            stationInfo.listSensors.toString().replaceAll(',','    ').trimEnd()+
             ';</p>' +
             '</div>';
 
           // Create an info window to share between markers.
           const infoWindow = new google.maps.InfoWindow();
-          //Add click event to open info window on marker
-          // Add a click listener for each marker, and set up the info window.
           marker.addListener('click', () => {
             infoWindow.close();
             infoWindow.setContent(markerInfo);
@@ -123,5 +115,22 @@ export class HomePage {
 
       this.markers.push(marker);
     }
+  }
+
+  loadAllMarkers(): void {
+    this.markers.forEach((markerInfo) => {
+      //Creating a new marker object
+      const marker = new google.maps.Marker({ markerInfo });
+      //Adding marker to google map
+      marker.setMap(this.map);
+    });
+  }
+
+  getInfoStation(id: number): StationSensors {
+    let stationInfo: StationSensors = null;
+    this.apiDataService.getStationInfo(id).subscribe((data: StationSensors) => {
+      stationInfo = data;
+    });
+    return stationInfo;
   }
 }
