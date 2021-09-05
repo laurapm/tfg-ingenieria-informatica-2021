@@ -1,13 +1,13 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ApiDataService } from '../services/api-data';
 import { HttpClient } from '@angular/common/http';
 import { Station } from 'src/app/model/station';
 import { StationSensors } from 'src/app/model/station-sensors';
-import { Position, PositionOptions } from '@capacitor/geolocation';
-import { async, waitForAsync } from '@angular/core/testing';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { ModalController } from '@ionic/angular';
+
+
 declare let google: any;
 
 @Component({
@@ -28,9 +28,11 @@ export class HomePage {
 
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
-  constructor(public apiDataService: ApiDataService, public http: HttpClient,
-              public geolocation: Geolocation,
-              private modalController: ModalController) {
+  constructor(
+    public apiDataService: ApiDataService,
+    public http: HttpClient,
+    public geolocation: Geolocation,
+  ) {
     this.listStations = this.getAllStations();
   }
 
@@ -48,7 +50,6 @@ export class HomePage {
   }
 
   showmap() {
-
     // this.listStations = this.getAllStations();
     // console.log('lista estaciones: ', this.listStations);
     this.geolocation.getCurrentPosition().then((resp) => {
@@ -59,7 +60,7 @@ export class HomePage {
     //this.displayMap();
   }
 
-  displayMap(latitude, longitude){
+  displayMap(latitude, longitude) {
     const location = new google.maps.LatLng(latitude, longitude);
     const options = {
       center: location,
@@ -82,6 +83,11 @@ export class HomePage {
         position: new google.maps.LatLng(station.latitude, station.longitude),
         map: this.map,
         title: station.name,
+        draggable: true,
+        raiseOnDrag: true,
+        labelContent: '$425K',
+        labelAnchor: new google.maps.Point(22, 0),
+        labelStyle: { opacity: 0.75 },
       });
 
       let stationInfo;
@@ -91,18 +97,35 @@ export class HomePage {
           stationInfo = data;
 
           let color = '#FF5733';
-          if (stationInfo.listSensors.length >= 5){
-             color = '#5DADE2';
+          if (stationInfo.listSensors.length >= 5) {
+            color = '#5DADE2';
           }
-          const markerInfo =
+          /*const markerInfo =
             '<div class=divmap>' +
-            '<p style="color:' + color + '; font-weight: bold">' +
+            '<p style="color:' +
+            color +
+            '; font-weight: bold">' +
             stationInfo.nameStation +
             '</p>' +
             '<p>Sensores de la estacion: <br>' +
-            stationInfo.listSensors.toString().replaceAll(',','    ').trimEnd()+
+            stationInfo.listSensors
+              .toString()
+              .replaceAll(',', '    ')
+              .trimEnd() +
             ';</p>' +
-            '</div>';
+            '<button onclick="presentModal()">Click me</button>' +
+            '</div>' +
+            ;*/
+
+            const link = 'station-details/' + station.id;
+            const markerInfo =  '<div class=divmap>' +
+            '<p style= "color:' + color + '"> Nombre de la estación: ' +  stationInfo.nameStation +
+            ';</p>'+
+            '<p>Localización GPS: ' + station.latitude+ ', ' + station.longitude + ';</p>' +
+            '<p><a href=' + link + '> Más información </a>;</p>' +
+        '</div>';
+
+
 
           // Create an info window to share between markers.
           const infoWindow = new google.maps.InfoWindow();
@@ -133,4 +156,5 @@ export class HomePage {
     });
     return stationInfo;
   }
+
 }

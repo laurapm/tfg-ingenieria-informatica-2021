@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.meteoclima.dto.SensorInfoDTO;
 import com.meteoclima.dto.StationSensorTypeDTO;
 import com.meteoclima.entities.Alert;
 import com.meteoclima.entities.AlertEvent;
@@ -28,9 +30,12 @@ import com.meteoclima.repositories.SensorTypeRepository;
 import com.meteoclima.repositories.StationRepository;
 import com.meteoclima.repositories.StationSensorTypeRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping(path = "/meteoclima")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST })
+@Slf4j
 public class MeteoClimaController {
 
 	@Autowired
@@ -80,7 +85,7 @@ public class MeteoClimaController {
 	}
 
 	@GetMapping("/sensors-station")
-	public StationSensorTypeDTO getAllSensorsForStation(@RequestParam int stationId) {
+	public StationSensorTypeDTO getAllSensorsForStation(@RequestParam int stationId) throws Exception {
 		List<StationSensorType> listSensors = stationSensorTypeRepository.findByStationId(stationId);
 		Station station = stationRepository.findById(stationId).orElse(null);
 
@@ -89,19 +94,31 @@ public class MeteoClimaController {
 
 			Optional<SensorType> sensorInfo = sensorTypeRepository.findById(sensor.getSensorTypeId());
 
-			if (sensorInfo.isPresent()) {
-
-				sensors.add(sensorInfo.get().getName());
+			if (!sensorInfo.isPresent()) {
+				throw new Exception("Sensor is not present");
 			}
-
+			sensors.add(sensorInfo.get().getName());
 		}
-
-		return new StationSensorTypeDTO(stationId, station.getName(), sensors);
+		String stationName = station != null ? station.getName() : Strings.EMPTY;
+		return new StationSensorTypeDTO(stationId, stationName, sensors);
 	}
 
-	@GetMapping("/measurements")
-	public List<Measurement> getAllMeasurementsForStation(@RequestParam int stationId) {
-		return measurementRepository.findByStationId(stationId);
+	@GetMapping("/measurements-station-sensor")
+	public List<SensorInfoDTO> getMeasurementsStationSensor(@RequestParam int stationId, @RequestParam int sensorId) {
+		List<Measurement> listMeasurements = measurementRepository.findByStationIdAndSensorTypeId(stationId, sensorId);
+		List<SensorInfoDTO> response = new ArrayList<>();
+
+		for (Measurement measurement : listMeasurements) {
+			String date = measurement.getDate().toLocalDateTime().toString();
+			SensorInfoDTO infoDTO = new SensorInfoDTO(stationId, sensorId, date, measurement.getValue(), true);
+			response.add(infoDTO);
+		}
+		return response;
+	}
+
+	@GetMapping("/measurements/all")
+	public List<Measurement> getAllMeasurements() {
+		return measurementRepository.findAll();
 	}
 
 	@GetMapping("/alert-events")

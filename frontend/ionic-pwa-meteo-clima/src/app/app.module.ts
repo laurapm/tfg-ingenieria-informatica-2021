@@ -19,6 +19,7 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import 'chartjs-plugin-zoom';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

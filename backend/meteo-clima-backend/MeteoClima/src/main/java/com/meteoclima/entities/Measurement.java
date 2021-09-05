@@ -14,21 +14,20 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "measurement")
-@IdClass(StationSensorCompositeId.class)
+@IdClass(MeasurementCompositeId.class)
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Measurement {
-
 	@Id
 	private int stationId;
 	@Id
 	private int sensorTypeId;
-
-	@Column(name = "date", nullable = false)
+	@Id
 	private Timestamp date;
 
 	@Column(name = "value", nullable = false)
 	private double value;
+
 }

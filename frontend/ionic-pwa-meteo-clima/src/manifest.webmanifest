@@ -1,11 +1,13 @@
 {
-  "name": "app",
-  "short_name": "app",
+  "name": "MeteoClima: app for metereological stations",
+  "short_name": "MeteoClima",
   "theme_color": "#1976d2",
-  "background_color": "#fafafa",
-  "display": "standalone",
+  "background_color": "#eef0f1",
   "scope": "./",
-  "start_url": "./",
+  "start_url": "./home",
+  "display_override": ["window-control-overlay", "minimal-ui"],
+  "display": "standalone",
+
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",

@@ -11,6 +11,6 @@ import com.meteoclima.entities.StationSensorCompositeId;
 @Repository
 public interface MeasurementRepository extends JpaRepository<Measurement, StationSensorCompositeId> {
 
-	List<Measurement> findByStationId(int stationId);
+	List<Measurement> findByStationIdAndSensorTypeId(int stationId, int sensorId);
 
 }
