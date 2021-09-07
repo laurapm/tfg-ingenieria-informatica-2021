@@ -11,7 +11,36 @@
   <h1> {{ name }} </h1>
   <p>Station ID: {{ id }}</p>
 
- <ion-list-header color="light"></ion-list-header>
+  <div class="example-button-container">
+    <ion-button shape="round" (click)="displayTemperature()">
+      <ion-icon name="thermometer"></ion-icon>
+    </ion-button>
+
+    <ion-button shape="round"  (click)="displayHumidity()">
+      <span class="iconify" data-icon="wi:humidity"></span>
+    </ion-button>
+
+    <ion-button shape="round"  (click)="displayRaining()">
+      <ion-icon name="rainy"></ion-icon>
+    </ion-button>
+
+    <ion-button shape="round"  (click)="displayUV()">
+      <ion-icon name="sunny"></ion-icon>
+    </ion-button>
+
+    <ion-button shape="round" (click)="displayOzone()">
+      <span class="iconify" data-icon="simple-icons:vectorlogozone"></span>
+    </ion-button>
+
+    <ion-button shape="round" (click)="displayWindy()">
+      <span class="iconify" data-icon="mdi:weather-windy"></span>
+    </ion-button>
+
+  </div>
+
+
+
+<div *ngIf="showTemperature">
   <ion-card class="welcome-card">
     <ion-card-header>
       <ion-card-title> Temperatura</ion-card-title>
@@ -20,8 +49,99 @@
       <canvas baseChart
       [datasets]="chartData"
       [labels]="chartLabes"
-      [chartType]="chartType">
+      [chartType]="chartType"
+      [options]="options">
     </canvas>
     </ion-card-content>
   </ion-card>
+</div>
+
+<div *ngIf="showHumidity">
+  <ion-card class="welcome-card">
+    <ion-card-header>
+      <ion-card-title> Humedad</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas baseChart
+      [datasets]="chartDataH"
+      [labels]="chartLabes"
+      [chartType]="chartType"
+      [options]="options"
+      [colors]="chartColorsHum">
+    </canvas>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<div *ngIf="showRaining">
+  <ion-card class="welcome-card">
+    <ion-card-header>
+      <ion-card-title> Probabilidad de lluvia</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas baseChart
+      [datasets]="chartDataR"
+      [labels]="chartLabes"
+      [chartType]="chartType"
+      [options]="options"
+      [colors]="chartColorsHum">
+    </canvas>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<div *ngIf="showUV">
+  <ion-card class="welcome-card">
+    <ion-card-header>
+      <ion-card-title> Indice de radiación ultravioleta </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas baseChart
+      [datasets]="chartDataUV"
+      [labels]="chartLabes"
+      [chartType]="chartType"
+      [options]="options"
+      [colors]="chartColorsHum">
+    </canvas>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<div *ngIf="showOzone">
+  <ion-card class="welcome-card">
+    <ion-card-header>
+      <ion-card-title> Cantidad de ozono </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas baseChart
+      [datasets]="chartDataO"
+      [labels]="chartLabes"
+      [chartType]="chartType"
+      [options]="options"
+      [colors]="chartColorsHum">
+    </canvas>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+
+<div *ngIf="showWind">
+  <ion-card class="welcome-card">
+    <ion-card-header>
+      <ion-card-title> Fuerza del viento </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas baseChart
+      [datasets]="chartDataW"
+      [labels]="chartLabes"
+      [chartType]="chartType"
+      [options]="options"
+      [colors]="chartColorsHum">
+    </canvas>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+
+
 </ion-content>

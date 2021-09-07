@@ -7,7 +7,6 @@ import { Station } from 'src/app/model/station';
 import { StationSensors } from 'src/app/model/station-sensors';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
-
 declare let google: any;
 
 @Component({
@@ -31,7 +30,7 @@ export class HomePage {
   constructor(
     public apiDataService: ApiDataService,
     public http: HttpClient,
-    public geolocation: Geolocation,
+    public geolocation: Geolocation
   ) {
     this.listStations = this.getAllStations();
   }
@@ -52,6 +51,7 @@ export class HomePage {
   showmap() {
     // this.listStations = this.getAllStations();
     // console.log('lista estaciones: ', this.listStations);
+
     this.geolocation.getCurrentPosition().then((resp) => {
       this.position = resp.coords;
       this.listStations = this.getAllStations();
@@ -117,15 +117,23 @@ export class HomePage {
             '</div>' +
             ;*/
 
-            const link = 'station-details/' + station.id;
-            const markerInfo =  '<div class=divmap>' +
-            '<p style= "color:' + color + '"> Nombre de la estación: ' +  stationInfo.nameStation +
-            ';</p>'+
-            '<p>Localización GPS: ' + station.latitude+ ', ' + station.longitude + ';</p>' +
-            '<p><a href=' + link + '> Más información </a>;</p>' +
-        '</div>';
-
-
+          const link = 'station-details/' + station.id;
+          const markerInfo =
+            '<div class=divmap>' +
+            '<p style= "color:' +
+            color +
+            '"> Nombre de la estación: ' +
+            stationInfo.nameStation +
+            ';</p>' +
+            '<p>Localización GPS: ' +
+            station.latitude +
+            ', ' +
+            station.longitude +
+            ';</p>' +
+            '<p><a href=' +
+            link +
+            '> Más información </a>;</p>' +
+            '</div>';
 
           // Create an info window to share between markers.
           const infoWindow = new google.maps.InfoWindow();
@@ -156,5 +164,4 @@ export class HomePage {
     });
     return stationInfo;
   }
-
 }

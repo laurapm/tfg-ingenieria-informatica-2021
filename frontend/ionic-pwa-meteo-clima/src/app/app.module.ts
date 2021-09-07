@@ -18,8 +18,9 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
+import 'hammerjs';
 import 'chartjs-plugin-zoom';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -28,6 +29,7 @@ import 'chartjs-plugin-zoom';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
