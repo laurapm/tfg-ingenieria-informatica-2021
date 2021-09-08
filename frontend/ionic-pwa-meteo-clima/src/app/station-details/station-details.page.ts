@@ -26,6 +26,12 @@ export class StationDetailsPage implements OnInit {
   showOzone = false;
   showWind = false;
 
+  valueT= 0;
+  valueH=1;
+  valueR=2;
+  valueUV= 0;
+  valueO=1;
+  valueW=2;
 
   // Data temperature
   chartData: ChartDataSets[] = [{ data: [], label: 'temperatura (ºC)' }];
@@ -310,5 +316,7 @@ export class StationDetailsPage implements OnInit {
   displayWindy(){
     this.showWind = !this.showWind;
   };
+
+
 
 }

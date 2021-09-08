@@ -9,31 +9,35 @@
 
 <ion-content>
   <h1> {{ name }} </h1>
-  <p>Station ID: {{ id }}</p>
 
-  <div class="example-button-container">
-    <ion-button shape="round" (click)="displayTemperature()">
-      <ion-icon name="thermometer"></ion-icon>
+  <div class="button-container">
+
+      <ion-button shape= "round" color="dark" (click)="displayTemperature()" >
+        <ion-icon name="thermometer" [ngStyle]="{'shape':'round', 'color': valueT === 0 ? '#F1C40F' : valueT === 1 ? '#A9DFBF' : '#CB4335'}"></ion-icon>
+      </ion-button>
+
+
+
+
+
+    <ion-button shape="round" color="dark"  (click)="displayHumidity()" >
+      <span class="iconify" data-icon="wi:humidity" [ngStyle]="{'shape':'round', 'color': valueH === 0 ? '#F1C40F' : valueH === 1 ? '#A9DFBF' : '#CB4335'}"></span>
     </ion-button>
 
-    <ion-button shape="round"  (click)="displayHumidity()">
-      <span class="iconify" data-icon="wi:humidity"></span>
+    <ion-button shape="round"  color="dark"  (click)="displayRaining()" >
+      <ion-icon name="rainy" [ngStyle]="{'shape':'round', 'color': valueR === 0 ? '#F1C40F' : valueR === 1 ? '#A9DFBF' : '#CB4335'}"></ion-icon>
     </ion-button>
 
-    <ion-button shape="round"  (click)="displayRaining()">
-      <ion-icon name="rainy"></ion-icon>
+    <ion-button shape="round"  color="dark"  (click)="displayUV()">
+      <ion-icon name="sunny" [ngStyle]="{'shape':'round', 'color': valueUV === 0 ? '#F1C40F' : valueUV === 1 ? '#A9DFBF' : '#CB4335'}"></ion-icon>
     </ion-button>
 
-    <ion-button shape="round"  (click)="displayUV()">
-      <ion-icon name="sunny"></ion-icon>
+    <ion-button shape="round"  color="dark"  (click)="displayOzone()">
+      <span class="iconify" data-icon="simple-icons:vectorlogozone" [ngStyle]="{'shape':'round', 'color': valueO === 0 ? '#F1C40F' : valueO === 1 ? '#A9DFBF' : '#CB4335'}"></span>
     </ion-button>
 
-    <ion-button shape="round" (click)="displayOzone()">
-      <span class="iconify" data-icon="simple-icons:vectorlogozone"></span>
-    </ion-button>
-
-    <ion-button shape="round" (click)="displayWindy()">
-      <span class="iconify" data-icon="mdi:weather-windy"></span>
+    <ion-button shape="round"  color="dark"  (click)="displayWindy()">
+      <span class="iconify" data-icon="mdi:weather-windy" [ngStyle]="{'shape':'round', 'color': valueW === 0 ? '#F1C40F' : valueW === 1 ? '#A9DFBF' : '#CB4335'}"></span>
     </ion-button>
 
   </div>
