@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title> MeteoClima</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen >
+  <ion-card id="both" >
+    <ion-card-header color="primary">
+      <ion-card-title class="ion-text-center">Register Station Form</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content color="primary" text-center>
+     <ion-list  *ngFor="let field of fields">
+      <ion-item>
+        <ion-label position="floating" inputmode="field.type">{{field.fieldName}} </ion-label>
+        <ion-input [(ngModel)]="field.value"></ion-input>
+      </ion-item>
+     </ion-list>
+
+     <ion-card-content color="primary" text-center>
+       <h3> Available station's sensors: </h3>
+      <ng-container formArrayName="options">
+        <ion-item *ngFor="let entry of sensors;">
+          <ion-label>{{entry.val}}</ion-label>
+          <ion-checkbox slot="end" [(ngModel)]="entry.isChecked"></ion-checkbox>
+        </ion-item>
+      </ng-container>
+    </ion-card-content>
+
+
+
+     <ion-button (click)="createStation()" size="small">
+      Create station
+      <ion-icon slot="start" name="paper-plane"></ion-icon>
+    </ion-button>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

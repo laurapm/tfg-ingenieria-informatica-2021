@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-declare let $: any;
 
+declare let $: any;
 
 @Component({
   selector: 'app-root',
@@ -24,6 +23,11 @@ export class AppComponent implements OnInit {
       title: 'Contact',
       url: '/contact',
       icon: 'mail'
+    },
+    {
+      title: 'Register station',
+      url: '/register-station',
+      icon: 'add-circle'
     }
   ];
 

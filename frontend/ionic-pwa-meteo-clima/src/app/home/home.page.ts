@@ -76,6 +76,7 @@ export class HomePage {
   }
 
   createMarkers() {
+    // TODO: Block markers
     for (const station of this.listStations) {
       // console.log('Creando marcador para la estacion', station);
 

@@ -19,9 +19,10 @@ const routes: Routes = [
     path: 'station-details/:id',
     loadChildren: () => import('./station-details/station-details.module').then( m => m.StationDetailsPageModule)
   },
-
-
-
+  {
+    path: 'register-station',
+    loadChildren: () => import('./register-station/register-station/register-station.module').then( m => m.RegisterStationPageModule)
+  },
 ];
 
 @NgModule({

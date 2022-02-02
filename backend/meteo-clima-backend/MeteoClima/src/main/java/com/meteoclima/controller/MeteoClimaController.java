@@ -6,14 +6,17 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.meteoclima.dto.SensorInfoDTO;
+import com.meteoclima.dto.StationData;
 import com.meteoclima.dto.StationSensorTypeDTO;
 import com.meteoclima.entities.Alert;
 import com.meteoclima.entities.AlertEvent;
@@ -105,7 +108,8 @@ public class MeteoClimaController {
 
 	@GetMapping("/measurements-station-sensor")
 	public List<SensorInfoDTO> getMeasurementsStationSensor(@RequestParam int stationId, @RequestParam int sensorId) {
-		List<Measurement> listMeasurements = measurementRepository.findByStationIdAndSensorTypeId(stationId, sensorId);
+		List<Measurement> listMeasurements = measurementRepository.findByStationIdAndSensorTypeId(stationId, sensorId,
+				Sort.by(Sort.Direction.DESC, "date"));
 		List<SensorInfoDTO> response = new ArrayList<>();
 
 		for (Measurement measurement : listMeasurements) {
@@ -124,5 +128,18 @@ public class MeteoClimaController {
 	@GetMapping("/alert-events")
 	public List<AlertEvent> getAllAlertEventsForStation(@RequestParam int stationId) {
 		return alertEventRepository.findByStationId(stationId);
+	}
+
+	@RequestMapping(value = "/create-station", method = RequestMethod.POST)
+	public void createStation(@RequestBody StationData stationToCreate) {
+		log.info("Station to create {}", stationToCreate.toString());
+		if (!cityRepository.findByName(stationToCreate.getCity()).isPresent()) {
+			City cityToCreate = new City();
+			cityToCreate.setName(stationToCreate.getCity());
+			cityToCreate.setCountry(stationToCreate.getCountry());
+		} else {
+			log.info("create station");
+		}
+
 	}
 }

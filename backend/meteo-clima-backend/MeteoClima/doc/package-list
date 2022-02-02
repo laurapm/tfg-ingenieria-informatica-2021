@@ -1,0 +1,8 @@
+com.meteoclima
+com.meteoclima.configurations
+com.meteoclima.controller
+com.meteoclima.dto
+com.meteoclima.entities
+com.meteoclima.repositories
+com.meteoclima.thread
+com.uah.tfg.MeteoClima
