@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Station} from '../model/station';
 import { StationSensors } from '../model/station-sensors';
+import { logging } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -25,4 +26,8 @@ export class ApiDataService {
   getSensors(): Observable<any>{
     return this.httpClient.get<string>(this.url+'/sensorTypes/name');
   }
+
+  //createStation(name: string, country: string, city: string, lat: string, long: string, sensors: []): Observable<any>{
+   // return this.httpClient.post
+  //}
 }

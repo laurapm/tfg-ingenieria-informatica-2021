@@ -4,15 +4,19 @@ import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> a800e1f9fb64b5d7831d026b06582a8fb6deb017
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+<<<<<<< HEAD
   // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
  /*firebaseConfig = {
@@ -29,6 +33,8 @@ export class AppComponent {
  app = initializeApp(this.firebaseConfig);
  analytics = getAnalytics(this.app);*/
 
+=======
+>>>>>>> a800e1f9fb64b5d7831d026b06582a8fb6deb017
   activePageTitle = 'Dashboard';
 
   pages = [

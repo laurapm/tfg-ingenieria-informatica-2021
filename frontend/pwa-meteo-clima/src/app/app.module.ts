@@ -15,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 // Import GEOLOCATION and GEOCODER
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+<<<<<<< HEAD
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 @NgModule({
@@ -26,6 +27,12 @@ import { environment } from '../environments/environment';
   // or after 30 seconds (whichever comes first).
   registrationStrategy: 'registerWhenStable:30000'
 }) ],
+=======
+@NgModule({
+  declarations: [AppComponent],
+  entryComponents: [],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule ],
+>>>>>>> a800e1f9fb64b5d7831d026b06582a8fb6deb017
   providers: [
     Platform,
     StatusBar,
